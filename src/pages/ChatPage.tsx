@@ -128,7 +128,7 @@ const ChatPage: React.FC = () => {
     setIsGenerating(true)
     setAutoScroll(true)
 
-    // 创建或更新聊天
+    // 创建或更新聊天（但不立即dispatch，等流式响应完成后再更新）
     let chatToUpdate: Chat
     if (currentChat) {
       chatToUpdate = {
@@ -146,13 +146,14 @@ const ChatPage: React.FC = () => {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       }
-      
+
       if (!id) {
         navigate(`/c/${newChatId}`, { replace: true })
       }
-    }
 
-    dispatch({ type: currentChat ? 'UPDATE_CHAT' : 'ADD_CHAT', payload: chatToUpdate })
+      // 只有新聊天才立即添加到状态中，避免重复更新
+      dispatch({ type: 'ADD_CHAT', payload: chatToUpdate })
+    }
 
     try {
       // 创建AbortController用于取消请求
@@ -185,33 +186,31 @@ const ChatPage: React.FC = () => {
             )
             setCurrentMessages(updatedMessages)
 
-            // 更新聊天
-            const updatedChat = {
-              ...chatToUpdate,
-              messages: updatedMessages,
-              updatedAt: Date.now(),
-            }
-            dispatch({ type: 'UPDATE_CHAT', payload: updatedChat })
-          }
+            // 只在流式响应完成时更新全局状态，避免频繁更新
+            if (chunk.done) {
+              const updatedChat = {
+                ...chatToUpdate,
+                messages: updatedMessages,
+                updatedAt: Date.now(),
+              }
+              dispatch({ type: 'UPDATE_CHAT', payload: updatedChat })
 
-          if (chunk.done) {
-            // 生成标题（仅对新聊天的第一条消息）
-            if (!currentChat && newMessages.length === 2) {
-              generateChatTitle(content).then(async (title) => {
-                const finalChat = {
-                  ...chatToUpdate,
-                  title,
-                  messages: newMessages.map(msg =>
-                    msg.id === assistantMessage.id
-                      ? { ...msg, content: assistantContent, done: true }
-                      : msg
-                  ),
-                }
-                dispatch({ type: 'UPDATE_CHAT', payload: finalChat })
-                await saveChat(finalChat)
-              })
-            } else {
-              saveChat(chatToUpdate)
+              // 生成标题（仅对新聊天的第一条消息）
+              if (!currentChat && newMessages.length === 2) {
+                generateChatTitle(content).then(async (title) => {
+                  const finalChat = {
+                    ...updatedChat,
+                    title,
+                  }
+                  dispatch({ type: 'UPDATE_CHAT', payload: finalChat })
+                  await saveChat(finalChat)
+                })
+              } else {
+                // 使用Promise处理，避免在非async函数中使用await
+                saveChat(updatedChat).catch(error => {
+                  console.error('Failed to save chat:', error)
+                })
+              }
             }
           }
         },

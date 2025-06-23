@@ -85,7 +85,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
         filterOption={(input, option) =>
           (option?.children as string)?.toLowerCase().includes(input.toLowerCase())
         }
-        dropdownRender={(menu) => (
+        popupRender={(menu) => (
           <div>
             {menu}
             {models.length === 0 && (
