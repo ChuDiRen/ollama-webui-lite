@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Button, Typography, Space, Steps, Alert } from 'antd'
+import { Card, Button, Typography, Steps, Alert } from 'antd'
 import {
   SettingOutlined,
   CloudOutlined,

@@ -8,7 +8,7 @@ import {
   CheckCircleOutlined,
 } from '@ant-design/icons'
 
-const { Title, Text, Paragraph } = Typography
+const { Text, Paragraph } = Typography
 
 interface OllamaInstallGuideProps {
   open: boolean

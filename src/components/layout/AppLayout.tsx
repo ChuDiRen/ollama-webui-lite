@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 import { Layout, App } from 'antd'
 import { useApp } from '@/contexts/AppContext'
 import { useTheme } from '@/contexts/ThemeContext'
@@ -15,7 +15,7 @@ const { Content, Sider } = Layout
 const AppLayout: React.FC = () => {
   const { state, dispatch } = useApp()
   const { theme } = useTheme()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { id } = useParams()
   const { message } = App.useApp()
   const [collapsed, setCollapsed] = useState(false)

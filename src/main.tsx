@@ -46,6 +46,7 @@ const getTheme = (isDark: boolean) => ({
 })
 
 // 主应用组件
+// eslint-disable-next-line react-refresh/only-export-components
 const AppWrapper: React.FC = () => {
   const [isDark, setIsDark] = React.useState(() => {
     const saved = localStorage.getItem('theme')

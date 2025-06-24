@@ -22,7 +22,7 @@ export interface UnifiedChatRequest {
   top_k?: number
   repeat_penalty?: number
   num_ctx?: number
-  [key: string]: any
+  [key: string]: unknown
 }
 
 // 统一的流式响应块

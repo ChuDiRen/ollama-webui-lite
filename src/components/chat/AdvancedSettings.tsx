@@ -4,20 +4,19 @@ import {
   InputNumber,
   Input,
   Switch,
-  Typography,
   Tooltip,
   Space,
 } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
+import { FormInstance } from 'antd/es/form'
 
-const { Text } = Typography
 const { TextArea } = Input
 
 interface AdvancedSettingsProps {
-  form: any
+  form: FormInstance
 }
 
-const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ form }) => {
+const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ _form }) => {
   return (
     <div className="space-y-4">
       {/* 种子 */}

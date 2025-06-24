@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { Button, FloatButton, Typography } from 'antd'
+import React, { useEffect, useRef, useCallback } from 'react'
+import { FloatButton, Typography } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import MessageBubble from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
@@ -28,7 +28,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const lastMessageRef = useRef<HTMLDivElement>(null)
 
   // 检查是否滚动到底部
-  const checkScrollPosition = () => {
+  const checkScrollPosition = useCallback(() => {
     if (!containerRef.current) return
 
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current
@@ -37,7 +37,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     if (autoScroll !== isAtBottom) {
       onAutoScrollChange(isAtBottom)
     }
-  }
+  }, [autoScroll, onAutoScrollChange])
 
   // 滚动到底部
   const scrollToBottom = () => {
@@ -60,7 +60,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
     container.addEventListener('scroll', checkScrollPosition)
     return () => container.removeEventListener('scroll', checkScrollPosition)
-  }, [autoScroll])
+  }, [checkScrollPosition])
 
   return (
     <div className="relative h-full">

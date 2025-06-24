@@ -21,7 +21,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 }) => {
   const [message, setMessage] = useState('')
   const [isComposing, setIsComposing] = useState(false)
-  const textAreaRef = useRef<any>(null)
+  const textAreaRef = useRef<{ resizableTextArea?: { textArea?: HTMLTextAreaElement }; focus?: () => void }>(null)
 
   // 自动调整文本框高度
   const adjustTextAreaHeight = () => {

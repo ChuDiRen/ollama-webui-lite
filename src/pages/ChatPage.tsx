@@ -217,12 +217,13 @@ const ChatPage: React.FC = () => {
         },
         abortControllerRef.current.signal
       )
-    } catch (error: any) {
-      if (error.name === 'AbortError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
         message.info('请求已取消')
       } else {
         console.error('Failed to send message:', error)
-        message.error('发送消息失败: ' + error.message)
+        const errorMessage = error instanceof Error ? error.message : '未知错误'
+        message.error('发送消息失败: ' + errorMessage)
 
         // 移除失败的消息
         setCurrentMessages(currentMessages)

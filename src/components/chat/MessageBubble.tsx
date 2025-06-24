@@ -6,7 +6,6 @@ import {
   CheckOutlined,
   UserOutlined,
   EditOutlined,
-  CloseOutlined,
 } from '@ant-design/icons'
 import { marked } from 'marked'
 import hljs from 'highlight.js'

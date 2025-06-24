@@ -3,7 +3,6 @@ import {
   Button,
   List,
   Typography,
-  Space,
   Dropdown,
   Modal,
   Input,
@@ -25,10 +24,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { useApp } from '@/contexts/AppContext'
-import { useTheme } from '@/contexts/ThemeContext'
 import type { Chat } from '@/contexts/AppContext'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 interface SidebarProps {
   collapsed: boolean
@@ -37,7 +35,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const { state, dispatch } = useApp()
-  const { theme } = useTheme()
+  // const { theme } = useTheme()
   const navigate = useNavigate()
   const { id: currentChatId } = useParams()
 

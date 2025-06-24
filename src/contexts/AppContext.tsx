@@ -50,7 +50,7 @@ export interface Settings {
   num_ctx?: number
   max_tokens?: number
   requestFormat?: string
-  options?: Record<string, any>
+  options?: Record<string, unknown>
 }
 
 export interface AppState {
@@ -176,7 +176,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         const settings = settingsData.reduce((acc, item) => {
           acc[item.key] = item.value
           return acc
-        }, {} as any)
+        }, {} as Record<string, unknown>)
         if (Object.keys(settings).length > 0) {
           dispatch({ type: 'SET_SETTINGS', payload: settings })
         }
@@ -197,6 +197,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 }
 
 // Hook
+// eslint-disable-next-line react-refresh/only-export-components
 export const useApp = () => {
   const context = useContext(AppContext)
   if (!context) {

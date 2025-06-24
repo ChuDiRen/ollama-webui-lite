@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Card, Space, Button } from 'antd'
+import { Typography, Card, Space } from 'antd'
 import {
   MessageOutlined,
   BulbOutlined,

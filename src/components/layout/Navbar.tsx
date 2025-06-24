@@ -23,8 +23,8 @@ interface NavbarProps {
   onToggleSider: () => void
 }
 
-const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggleSider }) => {
-  const { state, dispatch } = useApp()
+const Navbar: React.FC<NavbarProps> = ({ _collapsed, onToggleSider }) => {
+  const { state } = useApp()
   const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const [showSettings, setShowSettings] = useState(false)

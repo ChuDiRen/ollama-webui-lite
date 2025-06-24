@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { OLLAMA_API_BASE_URL } from '@/constants'
 
 // API响应类型
@@ -29,7 +29,7 @@ export interface OllamaGenerateRequest {
     top_p?: number
     repeat_penalty?: number
     num_ctx?: number
-    [key: string]: any
+    [key: string]: unknown
   }
 }
 
@@ -60,7 +60,7 @@ export interface OllamaChatRequest {
     top_p?: number
     repeat_penalty?: number
     num_ctx?: number
-    [key: string]: any
+    [key: string]: unknown
   }
 }
 
@@ -200,6 +200,7 @@ class OllamaAPI {
       const decoder = new TextDecoder()
       let buffer = ''
 
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
@@ -271,6 +272,7 @@ class OllamaAPI {
       const decoder = new TextDecoder()
       let buffer = ''
 
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
@@ -312,7 +314,7 @@ class OllamaAPI {
   // 拉取模型
   async pullModel(
     name: string,
-    onProgress?: (progress: any) => void,
+    onProgress?: (progress: { status?: string; completed?: number; total?: number }) => void,
     signal?: AbortSignal
   ): Promise<void> {
     try {
@@ -337,6 +339,7 @@ class OllamaAPI {
       const decoder = new TextDecoder()
       let buffer = ''
 
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read()
         if (done) break

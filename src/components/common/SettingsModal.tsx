@@ -5,8 +5,6 @@ import {
   Form,
   Input,
   Button,
-  Switch,
-  InputNumber,
   Select,
   Space,
   Typography,
@@ -18,7 +16,6 @@ import {
 } from 'antd'
 import {
   SettingOutlined,
-  CheckOutlined,
   DeleteOutlined,
   DownloadOutlined,
   ApiOutlined,
@@ -29,8 +26,7 @@ import { apiManager } from '@/services/apiManager'
 import { APP_NAME } from '@/constants'
 import AdvancedSettings from '@/components/chat/AdvancedSettings'
 
-const { Title, Text, Paragraph } = Typography
-const { TextArea } = Input
+const { Title, Text } = Typography
 const { Option } = Select
 
 interface SettingsModalProps {
@@ -44,7 +40,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
   const [form] = Form.useForm()
   const [activeTab, setActiveTab] = useState('general')
   const [isConnecting, setIsConnecting] = useState(false)
-  const [pullProgress, setPullProgress] = useState<any>(null)
+  const [pullProgress, setPullProgress] = useState<{ completed?: number; total?: number; status?: string } | null>(null)
   const [isPulling, setIsPulling] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -139,18 +135,19 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
     setPullProgress(null)
 
     try {
-      await ollamaAPI.pullModel(modelName, progress => {
+      await apiManager.pullModel(modelName, progress => {
         setPullProgress(progress)
       })
 
       // 重新获取模型列表
-      const models = await ollamaAPI.getModels()
+      const models = await apiManager.getModels()
       dispatch({ type: 'SET_MODELS', payload: models })
 
       message.success(`模型 ${modelName} 拉取成功`)
       setPullProgress(null)
-    } catch (error) {
-      message.error(`拉取模型失败: ${error.message}`)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : '未知错误'
+      message.error(`拉取模型失败: ${errorMessage}`)
     } finally {
       setIsPulling(false)
     }
@@ -161,15 +158,16 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
     setIsDeleting(true)
 
     try {
-      await ollamaAPI.deleteModel(modelName)
+      await apiManager.deleteModel(modelName)
 
       // 重新获取模型列表
-      const models = await ollamaAPI.getModels()
+      const models = await apiManager.getModels()
       dispatch({ type: 'SET_MODELS', payload: models })
 
       message.success(`模型 ${modelName} 删除成功`)
-    } catch (error) {
-      message.error(`删除模型失败: ${error.message}`)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : '未知错误'
+      message.error(`删除模型失败: ${errorMessage}`)
     } finally {
       setIsDeleting(false)
     }

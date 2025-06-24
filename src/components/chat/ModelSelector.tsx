@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select, Typography, Space, Tag, Button, message } from 'antd'
+import { Select, Typography, Tag, Button, message } from 'antd'
 import { RobotOutlined, StarOutlined, StarFilled } from '@ant-design/icons'
 import type { Model } from '@/contexts/AppContext'
 

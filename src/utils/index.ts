@@ -10,7 +10,7 @@ export const delay = (ms: number): Promise<void> => {
 /**
  * 防抖函数
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
@@ -27,7 +27,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 /**
  * 节流函数
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): ((...args: Parameters<T>) => void) => {
@@ -250,11 +250,11 @@ export const validate = {
     }
   },
 
-  isEmpty: (value: any): boolean => {
+  isEmpty: (value: unknown): boolean => {
     return value === null || value === undefined || value === ''
   },
 
-  isNumber: (value: any): boolean => {
+  isNumber: (value: unknown): boolean => {
     return !isNaN(value) && !isNaN(parseFloat(value))
   },
 }
