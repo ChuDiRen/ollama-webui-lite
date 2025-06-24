@@ -62,8 +62,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     return () => container.removeEventListener('scroll', checkScrollPosition)
   }, [autoScroll])
 
-
-
   return (
     <div className="relative h-full">
       {/* 消息列表容器 */}

@@ -15,7 +15,10 @@ interface OllamaInstallGuideProps {
   onClose: () => void
 }
 
-const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }) => {
+const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({
+  open,
+  onClose,
+}) => {
   const getOS = () => {
     const userAgent = window.navigator.userAgent
     if (userAgent.includes('Windows')) return 'windows'
@@ -33,11 +36,16 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         content: (
           <div>
             <Paragraph>
-              1. 访问 <a href="https://ollama.ai" target="_blank" rel="noopener noreferrer">https://ollama.ai</a>
+              1. 访问{' '}
+              <a
+                href="https://ollama.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://ollama.ai
+              </a>
             </Paragraph>
-            <Paragraph>
-              2. 点击 "Download for Windows" 按钮
-            </Paragraph>
+            <Paragraph>2. 点击 "Download for Windows" 按钮</Paragraph>
             <Paragraph>
               3. 下载 <code>OllamaSetup.exe</code> 文件
             </Paragraph>
@@ -52,12 +60,8 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
             <Paragraph>
               1. 双击运行 <code>OllamaSetup.exe</code>
             </Paragraph>
-            <Paragraph>
-              2. 按照安装向导完成安装
-            </Paragraph>
-            <Paragraph>
-              3. 安装完成后，Ollama 会自动启动
-            </Paragraph>
+            <Paragraph>2. 按照安装向导完成安装</Paragraph>
+            <Paragraph>3. 安装完成后，Ollama 会自动启动</Paragraph>
           </div>
         ),
       },
@@ -66,15 +70,11 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '检查 Ollama 是否正常运行',
         content: (
           <div>
-            <Paragraph>
-              1. 打开命令提示符 (CMD) 或 PowerShell
-            </Paragraph>
+            <Paragraph>1. 打开命令提示符 (CMD) 或 PowerShell</Paragraph>
             <Paragraph>
               2. 运行命令: <code>ollama --version</code>
             </Paragraph>
-            <Paragraph>
-              3. 如果显示版本号，说明安装成功
-            </Paragraph>
+            <Paragraph>3. 如果显示版本号，说明安装成功</Paragraph>
           </div>
         ),
       },
@@ -83,9 +83,7 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '下载你需要的AI模型',
         content: (
           <div>
-            <Paragraph>
-              运行以下命令下载模型：
-            </Paragraph>
+            <Paragraph>运行以下命令下载模型：</Paragraph>
             <Paragraph>
               <code>ollama pull llama2</code> - 下载 Llama 2 模型
             </Paragraph>
@@ -106,11 +104,16 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         content: (
           <div>
             <Paragraph>
-              1. 访问 <a href="https://ollama.ai" target="_blank" rel="noopener noreferrer">https://ollama.ai</a>
+              1. 访问{' '}
+              <a
+                href="https://ollama.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://ollama.ai
+              </a>
             </Paragraph>
-            <Paragraph>
-              2. 点击 "Download for Mac" 按钮
-            </Paragraph>
+            <Paragraph>2. 点击 "Download for Mac" 按钮</Paragraph>
             <Paragraph>
               3. 下载 <code>Ollama-darwin.zip</code> 文件
             </Paragraph>
@@ -122,15 +125,9 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '解压并安装应用程序',
         content: (
           <div>
-            <Paragraph>
-              1. 解压下载的 zip 文件
-            </Paragraph>
-            <Paragraph>
-              2. 将 Ollama.app 拖拽到 Applications 文件夹
-            </Paragraph>
-            <Paragraph>
-              3. 双击启动 Ollama 应用
-            </Paragraph>
+            <Paragraph>1. 解压下载的 zip 文件</Paragraph>
+            <Paragraph>2. 将 Ollama.app 拖拽到 Applications 文件夹</Paragraph>
+            <Paragraph>3. 双击启动 Ollama 应用</Paragraph>
           </div>
         ),
       },
@@ -139,15 +136,11 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '检查 Ollama 是否正常运行',
         content: (
           <div>
-            <Paragraph>
-              1. 打开终端 (Terminal)
-            </Paragraph>
+            <Paragraph>1. 打开终端 (Terminal)</Paragraph>
             <Paragraph>
               2. 运行命令: <code>ollama --version</code>
             </Paragraph>
-            <Paragraph>
-              3. 如果显示版本号，说明安装成功
-            </Paragraph>
+            <Paragraph>3. 如果显示版本号，说明安装成功</Paragraph>
           </div>
         ),
       },
@@ -156,9 +149,7 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '下载你需要的AI模型',
         content: (
           <div>
-            <Paragraph>
-              运行以下命令下载模型：
-            </Paragraph>
+            <Paragraph>运行以下命令下载模型：</Paragraph>
             <Paragraph>
               <code>ollama pull llama2</code> - 下载 Llama 2 模型
             </Paragraph>
@@ -178,15 +169,11 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '使用一键安装脚本',
         content: (
           <div>
-            <Paragraph>
-              运行以下命令安装 Ollama：
-            </Paragraph>
+            <Paragraph>运行以下命令安装 Ollama：</Paragraph>
             <Paragraph>
               <code>curl -fsSL https://ollama.ai/install.sh | sh</code>
             </Paragraph>
-            <Paragraph>
-              或者手动下载并安装：
-            </Paragraph>
+            <Paragraph>或者手动下载并安装：</Paragraph>
             <Paragraph>
               <code>wget https://ollama.ai/download/ollama-linux-amd64</code>
             </Paragraph>
@@ -204,15 +191,11 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '启动 Ollama 服务',
         content: (
           <div>
-            <Paragraph>
-              运行以下命令启动服务：
-            </Paragraph>
+            <Paragraph>运行以下命令启动服务：</Paragraph>
             <Paragraph>
               <code>ollama serve</code>
             </Paragraph>
-            <Paragraph>
-              或者作为系统服务运行：
-            </Paragraph>
+            <Paragraph>或者作为系统服务运行：</Paragraph>
             <Paragraph>
               <code>sudo systemctl enable ollama</code>
             </Paragraph>
@@ -227,15 +210,11 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '检查 Ollama 是否正常运行',
         content: (
           <div>
-            <Paragraph>
-              1. 打开新的终端窗口
-            </Paragraph>
+            <Paragraph>1. 打开新的终端窗口</Paragraph>
             <Paragraph>
               2. 运行命令: <code>ollama --version</code>
             </Paragraph>
-            <Paragraph>
-              3. 如果显示版本号，说明安装成功
-            </Paragraph>
+            <Paragraph>3. 如果显示版本号，说明安装成功</Paragraph>
           </div>
         ),
       },
@@ -244,9 +223,7 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         description: '下载你需要的AI模型',
         content: (
           <div>
-            <Paragraph>
-              运行以下命令下载模型：
-            </Paragraph>
+            <Paragraph>运行以下命令下载模型：</Paragraph>
             <Paragraph>
               <code>ollama pull llama2</code> - 下载 Llama 2 模型
             </Paragraph>
@@ -289,10 +266,8 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
               {os === 'windows' && <WindowsOutlined />}
               {os === 'mac' && <AppleOutlined />}
               {os === 'linux' && <CodeOutlined />}
-              检测到您的操作系统: {
-                os === 'windows' ? 'Windows' : 
-                os === 'mac' ? 'macOS' : 'Linux'
-              }
+              检测到您的操作系统:{' '}
+              {os === 'windows' ? 'Windows' : os === 'mac' ? 'macOS' : 'Linux'}
             </Space>
           }
           type="info"
@@ -306,14 +281,21 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
           items={currentSteps.map((step, index) => ({
             title: step.title,
             description: step.description,
-            icon: index === currentSteps.length - 1 ? <CheckCircleOutlined /> : undefined,
+            icon:
+              index === currentSteps.length - 1 ? (
+                <CheckCircleOutlined />
+              ) : undefined,
           }))}
         />
 
         {/* 详细步骤 */}
         <div className="space-y-4">
           {currentSteps.map((step, index) => (
-            <Card key={index} size="small" title={`${index + 1}. ${step.title}`}>
+            <Card
+              key={index}
+              size="small"
+              title={`${index + 1}. ${step.title}`}
+            >
               {step.content}
             </Card>
           ))}
@@ -325,7 +307,9 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
             <div>
               <Text strong>Q: Ollama 服务无法启动怎么办？</Text>
               <br />
-              <Text>A: 检查端口 11434 是否被占用，或尝试重启 Ollama 服务。</Text>
+              <Text>
+                A: 检查端口 11434 是否被占用，或尝试重启 Ollama 服务。
+              </Text>
             </div>
             <div>
               <Text strong>Q: 模型下载很慢怎么办？</Text>
@@ -335,7 +319,9 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
             <div>
               <Text strong>Q: 如何查看已安装的模型？</Text>
               <br />
-              <Text>A: 运行命令 <code>ollama list</code> 查看所有已安装的模型。</Text>
+              <Text>
+                A: 运行命令 <code>ollama list</code> 查看所有已安装的模型。
+              </Text>
             </div>
           </div>
         </Card>
@@ -343,13 +329,25 @@ const OllamaInstallGuide: React.FC<OllamaInstallGuideProps> = ({ open, onClose }
         {/* 有用链接 */}
         <Card title="有用链接" size="small">
           <Space direction="vertical">
-            <a href="https://ollama.ai" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://ollama.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Ollama 官方网站
             </a>
-            <a href="https://github.com/jmorganca/ollama" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://github.com/jmorganca/ollama"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Ollama GitHub 仓库
             </a>
-            <a href="https://ollama.ai/library" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://ollama.ai/library"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               模型库
             </a>
           </Space>

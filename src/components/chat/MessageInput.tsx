@@ -39,7 +39,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
     onSendMessage(trimmedMessage)
     setMessage('')
-    
+
     // 重置文本框高度
     setTimeout(() => {
       const textArea = textAreaRef.current?.resizableTextArea?.textArea
@@ -84,7 +84,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
               <TextArea
                 ref={textAreaRef}
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={e => setMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
                 onCompositionStart={() => setIsComposing(true)}
                 onCompositionEnd={() => setIsComposing(false)}
@@ -142,7 +142,10 @@ const MessageInput: React.FC<MessageInputProps> = ({
               大语言模型可能会出错，请验证重要信息
             </Text>
 
-            <Space className="text-xs text-gray-400 dark:text-gray-500" size="large">
+            <Space
+              className="text-xs text-gray-400 dark:text-gray-500"
+              size="large"
+            >
               {message.length > 0 && (
                 <Text className="text-xs flex items-center">
                   <span className="mr-1">📝</span>

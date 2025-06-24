@@ -166,7 +166,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
         // 加载聊天记录
         const chats = await db.getAll('chats')
-        dispatch({ type: 'SET_CHATS', payload: chats.sort((a, b) => b.updatedAt - a.updatedAt) })
+        dispatch({
+          type: 'SET_CHATS',
+          payload: chats.sort((a, b) => b.updatedAt - a.updatedAt),
+        })
 
         // 加载设置
         const settingsData = await db.getAll('settings')

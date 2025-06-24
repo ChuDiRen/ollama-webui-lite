@@ -30,8 +30,9 @@ const AppLayout: React.FC = () => {
     const hasOllamaConfig = state.settings.API_BASE_URL
     const hasDeepSeekConfig = state.settings.DEEPSEEK_API_KEY
 
-    const needsSetup = (provider === 'ollama' && !hasOllamaConfig) ||
-                      (provider === 'deepseek' && !hasDeepSeekConfig)
+    const needsSetup =
+      (provider === 'ollama' && !hasOllamaConfig) ||
+      (provider === 'deepseek' && !hasDeepSeekConfig)
 
     setShowWelcome(needsSetup)
   }, [state.settings])
@@ -84,8 +85,10 @@ const AppLayout: React.FC = () => {
         const serviceName = provider === 'ollama' ? 'Ollama' : 'DeepSeek'
 
         // 只在有配置的情况下显示错误
-        if ((provider === 'ollama' && hasOllamaConfig) ||
-            (provider === 'deepseek' && hasDeepSeekConfig)) {
+        if (
+          (provider === 'ollama' && hasOllamaConfig) ||
+          (provider === 'deepseek' && hasDeepSeekConfig)
+        ) {
           message.error({
             content: (
               <div>
@@ -94,7 +97,7 @@ const AppLayout: React.FC = () => {
                 {provider === 'ollama' && (
                   <a
                     href="#"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault()
                       setShowInstallGuide(true)
                     }}
@@ -123,7 +126,13 @@ const AppLayout: React.FC = () => {
     // 延迟检查，避免页面加载时立即显示错误
     const timer = setTimeout(checkAPIStatus, 1000)
     return () => clearTimeout(timer)
-  }, [state.settings.API_BASE_URL, state.settings.DEEPSEEK_API_KEY, state.settings.apiProvider, dispatch, message])
+  }, [
+    state.settings.API_BASE_URL,
+    state.settings.DEEPSEEK_API_KEY,
+    state.settings.apiProvider,
+    dispatch,
+    message,
+  ])
 
   // 设置当前聊天ID
   useEffect(() => {
@@ -182,10 +191,7 @@ const AppLayout: React.FC = () => {
           boxShadow: collapsed ? 'none' : '2px 0 8px rgba(0,0,0,0.1)',
         }}
       >
-        <Sidebar
-          collapsed={collapsed}
-          onCollapse={setCollapsed}
-        />
+        <Sidebar collapsed={collapsed} onCollapse={setCollapsed} />
       </Sider>
 
       <Layout

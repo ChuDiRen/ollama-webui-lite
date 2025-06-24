@@ -14,12 +14,12 @@ const ChatPage: React.FC = () => {
   const { state, dispatch } = useApp()
   const { id } = useParams()
   const navigate = useNavigate()
-  
+
   const [currentMessages, setCurrentMessages] = useState<Message[]>([])
   const [selectedModel, setSelectedModel] = useState<string>('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [autoScroll, setAutoScroll] = useState(true)
-  
+
   const abortControllerRef = useRef<AbortController | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -75,24 +75,25 @@ const ChatPage: React.FC = () => {
   const generateChatTitle = async (firstMessage: string): Promise<string> => {
     try {
       const titlePrompt = `请为以下对话生成一个简短的标题（不超过20个字符）：\n\n${firstMessage}`
-      const titleMessages: Message[] = [{
-        id: 'title-gen',
-        role: 'user',
-        content: titlePrompt,
-        timestamp: Date.now(),
-        done: true,
-      }]
-
-      const title = await apiManager.chat(
-        titleMessages,
-        selectedModel,
+      const titleMessages: Message[] = [
         {
-          temperature: 0.7,
-          max_tokens: 50,
-        }
-      )
+          id: 'title-gen',
+          role: 'user',
+          content: titlePrompt,
+          timestamp: Date.now(),
+          done: true,
+        },
+      ]
 
-      return title.trim() || firstMessage.slice(0, 20) + (firstMessage.length > 20 ? '...' : '')
+      const title = await apiManager.chat(titleMessages, selectedModel, {
+        temperature: 0.7,
+        max_tokens: 50,
+      })
+
+      return (
+        title.trim() ||
+        firstMessage.slice(0, 20) + (firstMessage.length > 20 ? '...' : '')
+      )
     } catch (error) {
       console.error('Failed to generate title:', error)
       return firstMessage.slice(0, 20) + (firstMessage.length > 20 ? '...' : '')
@@ -174,7 +175,7 @@ const ChatPage: React.FC = () => {
           max_tokens: state.settings.max_tokens,
           ...state.settings.options,
         },
-        (chunk) => {
+        chunk => {
           if (chunk.content) {
             assistantContent += chunk.content
 
@@ -197,7 +198,7 @@ const ChatPage: React.FC = () => {
 
               // 生成标题（仅对新聊天的第一条消息）
               if (!currentChat && newMessages.length === 2) {
-                generateChatTitle(content).then(async (title) => {
+                generateChatTitle(content).then(async title => {
                   const finalChat = {
                     ...updatedChat,
                     title,
@@ -222,7 +223,7 @@ const ChatPage: React.FC = () => {
       } else {
         console.error('Failed to send message:', error)
         message.error('发送消息失败: ' + error.message)
-        
+
         // 移除失败的消息
         setCurrentMessages(currentMessages)
       }

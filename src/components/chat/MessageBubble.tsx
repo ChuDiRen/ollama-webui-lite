@@ -6,7 +6,7 @@ import {
   CheckOutlined,
   UserOutlined,
   EditOutlined,
-  CloseOutlined
+  CloseOutlined,
 } from '@ant-design/icons'
 import { marked } from 'marked'
 import hljs from 'highlight.js'
@@ -140,8 +140,12 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
   const isUser = message.role === 'user'
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} group mb-8 chat-message message-bubble`}>
-      <div className={`flex items-start space-x-4 max-w-[90%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
+    <div
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} group mb-8 chat-message message-bubble`}
+    >
+      <div
+        className={`flex items-start space-x-4 max-w-[90%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}
+      >
         {/* 头像 */}
         <div className="flex-shrink-0 mt-1">
           {isUser ? (
@@ -160,7 +164,9 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
         </div>
 
         {/* 消息内容 */}
-        <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} flex-1 min-w-0`}>
+        <div
+          className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} flex-1 min-w-0`}
+        >
           {/* 发送者标识 */}
           <div className={`mb-2 px-1 ${isUser ? 'text-right' : 'text-left'}`}>
             <Text className="text-xs text-gray-500 dark:text-gray-400 font-medium">
@@ -172,37 +178,47 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
           <div
             className={`
               relative px-5 py-4 rounded-3xl shadow-lg transition-all duration-300 max-w-full group-hover:shadow-xl
-              ${isUser
-                ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white rounded-br-lg shadow-blue-200 dark:shadow-blue-900/30'
-                : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-bl-lg shadow-gray-200 dark:shadow-gray-900/30'
+              ${
+                isUser
+                  ? 'bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 text-white rounded-br-lg shadow-blue-200 dark:shadow-blue-900/30'
+                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-bl-lg shadow-gray-200 dark:shadow-gray-900/30'
               }
               ${isLast && !message.done ? 'animate-pulse' : ''}
               hover:scale-[1.02] transform-gpu
             `}
           >
             {/* 消息内容 */}
-            <div className={`text-sm leading-relaxed ${isUser ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}>
+            <div
+              className={`text-sm leading-relaxed ${isUser ? 'text-white' : 'text-gray-900 dark:text-gray-100'}`}
+            >
               {isEditing ? (
                 <div className="space-y-3">
                   <TextArea
                     value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
+                    onChange={e => setEditContent(e.target.value)}
                     autoSize={{ minRows: 2, maxRows: 10 }}
                     className="bg-transparent border-gray-300 dark:border-gray-600 text-sm rounded-lg"
                   />
                   <div className="flex justify-end space-x-2">
-                    <Button size="small" onClick={handleCancelEdit} className="rounded-lg">
+                    <Button
+                      size="small"
+                      onClick={handleCancelEdit}
+                      className="rounded-lg"
+                    >
                       取消
                     </Button>
-                    <Button size="small" type="primary" onClick={handleConfirmEdit} className="rounded-lg">
+                    <Button
+                      size="small"
+                      type="primary"
+                      onClick={handleConfirmEdit}
+                      className="rounded-lg"
+                    >
                       确认
                     </Button>
                   </div>
                 </div>
               ) : (
-                <div className="break-words">
-                  {renderContent()}
-                </div>
+                <div className="break-words">{renderContent()}</div>
               )}
             </div>
 
@@ -210,11 +226,15 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
             {!message.done && (
               <div className="mt-3 flex items-center space-x-1">
                 <div className="w-2 h-2 bg-current rounded-full animate-bounce opacity-70" />
-                <div className="w-2 h-2 bg-current rounded-full animate-bounce opacity-70" style={{ animationDelay: '0.1s' }} />
-                <div className="w-2 h-2 bg-current rounded-full animate-bounce opacity-70" style={{ animationDelay: '0.2s' }} />
-                <Text className="text-xs ml-2 opacity-70">
-                  正在生成...
-                </Text>
+                <div
+                  className="w-2 h-2 bg-current rounded-full animate-bounce opacity-70"
+                  style={{ animationDelay: '0.1s' }}
+                />
+                <div
+                  className="w-2 h-2 bg-current rounded-full animate-bounce opacity-70"
+                  style={{ animationDelay: '0.2s' }}
+                />
+                <Text className="text-xs ml-2 opacity-70">正在生成...</Text>
               </div>
             )}
           </div>
@@ -228,11 +248,16 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
 
           {/* 操作按钮 */}
           {message.done && !isEditing && (
-            <div className={`
+            <div
+              className={`
               mt-3 message-actions transition-all duration-300
               ${isUser ? 'flex justify-end' : 'flex justify-start'}
-            `}>
-              <Space size="small" className="bg-white dark:bg-gray-700 rounded-lg shadow-md px-2 py-1 border border-gray-200 dark:border-gray-600">
+            `}
+            >
+              <Space
+                size="small"
+                className="bg-white dark:bg-gray-700 rounded-lg shadow-md px-2 py-1 border border-gray-200 dark:border-gray-600"
+              >
                 {/* 复制按钮 */}
                 <Button
                   type="text"
@@ -241,9 +266,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
                   onClick={handleCopy}
                   className={`
                     rounded-md transition-all duration-200 hover:scale-105
-                    ${copied
-                      ? 'text-green-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20'
-                      : 'text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                    ${
+                      copied
+                        ? 'text-green-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20'
+                        : 'text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                     }
                   `}
                   title="复制"

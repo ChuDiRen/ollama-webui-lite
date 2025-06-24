@@ -5,24 +5,28 @@
 ## ✨ 特性
 
 ### 🎨 现代化设计
+
 - **企业级 UI** - 基于 Ant Design X 的专业界面设计
 - **响应式布局** - 完美适配桌面端和移动端
 - **深色/浅色主题** - 支持主题切换，保护视力
 - **流畅动画** - 300ms 标准过渡动画，提升用户体验
 
 ### 💬 智能对话
+
 - **实时流式对话** - 支持 Ollama 和 DeepSeek API
 - **Markdown 渲染** - 完整支持代码高亮和数学公式
 - **消息管理** - 编辑、重新生成、复制消息
 - **对话历史** - 自动保存，支持导入导出
 
 ### 🔧 强大功能
+
 - **模型管理** - 查看和选择可用模型
 - **高级设置** - 温度、Top-K、Top-P 等参数调节
 - **本地存储** - IndexedDB 数据持久化
 - **多语言支持** - 完整中文本地化
 
 ### 🚀 技术亮点
+
 - **React 18** - 最新 React 特性和性能优化
 - **TypeScript** - 完整类型安全，提升开发体验
 - **Vite** - 极速开发构建，热重载支持
@@ -51,17 +55,20 @@
 ### 快速开始
 
 1. **克隆项目**
+
    ```bash
    git clone https://github.com/ollama-webui/ollama-webui-lite.git
    cd ollama-webui-lite
    ```
 
 2. **安装依赖**
+
    ```bash
    npm install
    ```
 
 3. **启动开发服务器**
+
    ```bash
    npm run dev
    ```
@@ -103,11 +110,13 @@ npm run type-check
 应用支持两种 API 提供商：
 
 #### 1. Ollama (本地部署)
+
 - 下载并安装 [Ollama](https://ollama.ai/)
 - 启动 Ollama 服务：`ollama serve`
 - 默认运行在 `http://localhost:11434`
 
 #### 2. DeepSeek (云端 API)
+
 - 注册 [DeepSeek](https://platform.deepseek.com/) 账号
 - 获取 API Key
 - 在设置中配置 API Key
@@ -229,15 +238,10 @@ import { apiManager } from '@/services/apiManager'
 
 const sendMessage = async (message: string) => {
   try {
-    await apiManager.chatStream(
-      messages,
-      selectedModel,
-      settings,
-      (chunk) => {
-        // 处理流式响应
-        console.log(chunk.content)
-      }
-    )
+    await apiManager.chatStream(messages, selectedModel, settings, chunk => {
+      // 处理流式响应
+      console.log(chunk.content)
+    })
   } catch (error) {
     console.error('发送失败:', error)
   }

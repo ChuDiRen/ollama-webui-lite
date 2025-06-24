@@ -9,7 +9,7 @@ import {
   Input,
   message,
   Empty,
-  Divider
+  Divider,
 } from 'antd'
 import {
   PlusOutlined,
@@ -40,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const { theme } = useTheme()
   const navigate = useNavigate()
   const { id: currentChatId } = useParams()
-  
+
   const [editingChatId, setEditingChatId] = useState<string | null>(null)
   const [editingTitle, setEditingTitle] = useState('')
   const [showClearConfirm, setShowClearConfirm] = useState(false)
@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     }
-    
+
     dispatch({ type: 'ADD_CHAT', payload: newChat })
     navigate(`/c/${newChatId}`)
   }
@@ -83,17 +83,17 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         title: editingTitle.trim(),
         updatedAt: Date.now(),
       }
-      
+
       dispatch({ type: 'UPDATE_CHAT', payload: updatedChat })
-      
+
       // 保存到数据库
       if (state.db) {
         await state.db.put('chats', updatedChat)
       }
-      
+
       message.success('标题已更新')
     }
-    
+
     setEditingChatId(null)
     setEditingTitle('')
   }
@@ -114,17 +114,17 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       cancelText: '取消',
       onOk: async () => {
         dispatch({ type: 'DELETE_CHAT', payload: chat.id })
-        
+
         // 从数据库删除
         if (state.db) {
           await state.db.delete('chats', chat.id)
         }
-        
+
         // 如果删除的是当前对话，跳转到首页
         if (currentChatId === chat.id) {
           navigate('/')
         }
-        
+
         message.success('对话已删除')
       },
     })
@@ -156,7 +156,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     }
 
     const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-      type: 'application/json;charset=utf-8'
+      type: 'application/json;charset=utf-8',
     })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -179,7 +179,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     if (!file) return
 
     const reader = new FileReader()
-    reader.onload = async (e) => {
+    reader.onload = async e => {
       try {
         const content = e.target?.result as string
         const importData = JSON.parse(content)
@@ -263,7 +263,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const formatTime = (timestamp: number) => {
     const now = dayjs()
     const time = dayjs(timestamp)
-    
+
     if (now.diff(time, 'day') === 0) {
       return time.format('HH:mm')
     } else if (now.diff(time, 'day') === 1) {
@@ -306,14 +306,15 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           <List
             className="p-2"
             dataSource={state.chats}
-            renderItem={(chat) => (
+            renderItem={chat => (
               <List.Item
                 className={`
                   !px-3 !py-2 mb-1 rounded-lg cursor-pointer transition-all duration-200
                   hover:bg-gray-100 dark:hover:bg-gray-800
-                  ${currentChatId === chat.id 
-                    ? 'bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500' 
-                    : 'border-l-4 border-transparent'
+                  ${
+                    currentChatId === chat.id
+                      ? 'bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500'
+                      : 'border-l-4 border-transparent'
                   }
                 `}
                 onClick={() => handleSelectChat(chat.id)}
@@ -325,36 +326,34 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                       {editingChatId === chat.id ? (
                         <Input
                           value={editingTitle}
-                          onChange={(e) => setEditingTitle(e.target.value)}
+                          onChange={e => setEditingTitle(e.target.value)}
                           onPressEnter={handleSaveTitle}
                           onBlur={handleSaveTitle}
-                          onKeyDown={(e) => {
+                          onKeyDown={e => {
                             if (e.key === 'Escape') {
                               handleCancelEdit()
                             }
                           }}
                           className="!p-0 !border-0 !shadow-none"
                           autoFocus
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={e => e.stopPropagation()}
                         />
                       ) : (
                         <div>
-                          <Text 
+                          <Text
                             className="block text-sm font-medium text-gray-900 dark:text-gray-100 truncate"
                             title={chat.title}
                           >
                             {chat.title}
                           </Text>
-                          <Text 
-                            className="block text-xs text-gray-500 dark:text-gray-400"
-                          >
+                          <Text className="block text-xs text-gray-500 dark:text-gray-400">
                             {formatTime(chat.updatedAt)}
                           </Text>
                         </div>
                       )}
                     </div>
                   </div>
-                  
+
                   {editingChatId !== chat.id && (
                     <Dropdown
                       menu={{ items: getChatMenuItems(chat) }}
@@ -366,7 +365,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
                         icon={<MoreOutlined />}
                         size="small"
                         className="opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
                       />
                     </Dropdown>
                   )}

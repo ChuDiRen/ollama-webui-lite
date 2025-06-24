@@ -57,7 +57,9 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggleSider }) => {
   // 获取当前聊天标题
   const getCurrentChatTitle = () => {
     if (state.currentChatId) {
-      const currentChat = state.chats.find(chat => chat.id === state.currentChatId)
+      const currentChat = state.chats.find(
+        chat => chat.id === state.currentChatId
+      )
       return currentChat?.title || '新对话'
     }
     return APP_NAME
@@ -68,9 +70,10 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggleSider }) => {
       className={`
         sticky top-0 z-30 px-4 h-16 flex items-center justify-between
         backdrop-blur-xl border-b transition-all duration-300
-        ${theme === 'dark' 
-          ? 'bg-gray-900/90 border-gray-700' 
-          : 'bg-white/90 border-gray-200'
+        ${
+          theme === 'dark'
+            ? 'bg-gray-900/90 border-gray-700'
+            : 'bg-white/90 border-gray-200'
         }
       `}
       style={{
@@ -92,8 +95,8 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggleSider }) => {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
             <span className="text-white font-bold text-sm">O</span>
           </div>
-          <Title 
-            level={4} 
+          <Title
+            level={4}
             className="!mb-0 !text-gray-900 dark:!text-gray-100 truncate max-w-xs md:max-w-md"
           >
             {getCurrentChatTitle()}
@@ -128,12 +131,9 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggleSider }) => {
           placement="bottomRight"
           trigger={['click']}
         >
-          <Button
-            type="text"
-            className="flex items-center space-x-2 h-10 px-3"
-          >
-            <Avatar 
-              size="small" 
+          <Button type="text" className="flex items-center space-x-2 h-10 px-3">
+            <Avatar
+              size="small"
               icon={<UserOutlined />}
               className="bg-gradient-to-br from-blue-500 to-purple-600"
             />

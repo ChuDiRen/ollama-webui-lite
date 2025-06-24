@@ -78,7 +78,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     window.addEventListener('themeChange', handleThemeChange as EventListener)
-    return () => window.removeEventListener('themeChange', handleThemeChange as EventListener)
+    return () =>
+      window.removeEventListener(
+        'themeChange',
+        handleThemeChange as EventListener
+      )
   }, [theme])
 
   return (

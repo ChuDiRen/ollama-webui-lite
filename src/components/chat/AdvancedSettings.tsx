@@ -1,5 +1,13 @@
 import React from 'react'
-import { Form, InputNumber, Input, Switch, Typography, Tooltip, Space } from 'antd'
+import {
+  Form,
+  InputNumber,
+  Input,
+  Switch,
+  Typography,
+  Tooltip,
+  Space,
+} from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
 
 const { Text } = Typography

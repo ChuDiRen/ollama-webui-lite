@@ -78,23 +78,25 @@ class DeepSeekAPI {
   constructor(apiKey: string, baseURL: string = DEEPSEEK_API_BASE_URL) {
     this.apiKey = apiKey
     this.baseURL = baseURL
-    
+
     this.client = axios.create({
       baseURL: `${baseURL}/${DEEPSEEK_API_VERSION}`,
       timeout: 60000,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
     })
 
     // 请求拦截器
     this.client.interceptors.request.use(
-      (config) => {
-        console.log(`DeepSeek API Request: ${config.method?.toUpperCase()} ${config.url}`)
+      config => {
+        console.log(
+          `DeepSeek API Request: ${config.method?.toUpperCase()} ${config.url}`
+        )
         return config
       },
-      (error) => {
+      error => {
         console.error('DeepSeek API Request Error:', error)
         return Promise.reject(error)
       }
@@ -102,11 +104,13 @@ class DeepSeekAPI {
 
     // 响应拦截器
     this.client.interceptors.response.use(
-      (response) => {
-        console.log(`DeepSeek API Response: ${response.status} ${response.config.url}`)
+      response => {
+        console.log(
+          `DeepSeek API Response: ${response.status} ${response.config.url}`
+        )
         return response
       },
-      (error) => {
+      error => {
         console.error('DeepSeek API Response Error:', error)
         return Promise.reject(error)
       }
@@ -144,10 +148,13 @@ class DeepSeekAPI {
   // 聊天对话（非流式）
   async chat(request: DeepSeekChatRequest): Promise<DeepSeekChatResponse> {
     try {
-      const response = await this.client.post<DeepSeekChatResponse>('/chat/completions', {
-        ...request,
-        stream: false,
-      })
+      const response = await this.client.post<DeepSeekChatResponse>(
+        '/chat/completions',
+        {
+          ...request,
+          stream: false,
+        }
+      )
       return response.data
     } catch (error) {
       console.error('Failed to chat:', error)
@@ -162,22 +169,27 @@ class DeepSeekAPI {
     signal?: AbortSignal
   ): Promise<void> {
     try {
-      const response = await fetch(`${this.baseURL}/${DEEPSEEK_API_VERSION}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
-        body: JSON.stringify({
-          ...request,
-          stream: true,
-        }),
-        signal,
-      })
+      const response = await fetch(
+        `${this.baseURL}/${DEEPSEEK_API_VERSION}/chat/completions`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.apiKey}`,
+          },
+          body: JSON.stringify({
+            ...request,
+            stream: true,
+          }),
+          signal,
+        }
+      )
 
       if (!response.ok) {
         const errorText = await response.text()
-        throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText}`)
+        throw new Error(
+          `HTTP ${response.status}: ${response.statusText} - ${errorText}`
+        )
       }
 
       const reader = response.body?.getReader()
@@ -198,7 +210,7 @@ class DeepSeekAPI {
 
         for (const line of lines) {
           const trimmedLine = line.trim()
-          
+
           // 跳过空行和注释行
           if (!trimmedLine || trimmedLine.startsWith(':')) {
             continue
@@ -207,7 +219,7 @@ class DeepSeekAPI {
           // 处理 SSE 格式的数据
           if (trimmedLine.startsWith('data: ')) {
             const data = trimmedLine.slice(6) // 移除 "data: " 前缀
-            
+
             // 检查是否是结束标记
             if (data === '[DONE]') {
               return
@@ -216,7 +228,7 @@ class DeepSeekAPI {
             try {
               const chunk = JSON.parse(data) as DeepSeekStreamChunk
               onChunk(chunk)
-              
+
               // 检查是否完成
               if (chunk.choices?.[0]?.finish_reason) {
                 return
@@ -237,7 +249,10 @@ class DeepSeekAPI {
   estimateTokens(text: string): number {
     // 简单的 token 估算：中文字符按 1.5 个 token 计算，英文单词按 1 个 token 计算
     const chineseChars = (text.match(/[\u4e00-\u9fff]/g) || []).length
-    const englishWords = text.replace(/[\u4e00-\u9fff]/g, '').split(/\s+/).filter(word => word.length > 0).length
+    const englishWords = text
+      .replace(/[\u4e00-\u9fff]/g, '')
+      .split(/\s+/)
+      .filter(word => word.length > 0).length
     return Math.ceil(chineseChars * 1.5 + englishWords)
   }
 

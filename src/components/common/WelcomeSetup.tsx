@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Card, Button, Typography, Space, Steps, Alert } from 'antd'
-import { 
-  SettingOutlined, 
-  CloudOutlined, 
+import {
+  SettingOutlined,
+  CloudOutlined,
   DesktopOutlined,
-  RocketOutlined 
+  RocketOutlined,
 } from '@ant-design/icons'
 
 const { Title, Text, Paragraph } = Typography
@@ -14,7 +14,9 @@ interface WelcomeSetupProps {
 }
 
 const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
-  const [selectedProvider, setSelectedProvider] = useState<'ollama' | 'deepseek' | null>(null)
+  const [selectedProvider, setSelectedProvider] = useState<
+    'ollama' | 'deepseek' | null
+  >(null)
 
   const providers = [
     {
@@ -26,7 +28,7 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
         '完全本地化，保护隐私',
         '无需API费用',
         '支持多种开源模型',
-        '可离线使用'
+        '可离线使用',
       ],
       requirements: '需要安装 Ollama 软件',
     },
@@ -39,7 +41,7 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
         '即开即用，无需安装',
         '强大的模型性能',
         '稳定的服务质量',
-        '持续更新优化'
+        '持续更新优化',
       ],
       requirements: '需要 DeepSeek API Key',
     },
@@ -68,11 +70,11 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
             <RocketOutlined className="text-white text-3xl" />
           </div>
-          
+
           <Title level={1} className="!mb-4 text-gradient">
             欢迎使用 Ollama WebUI Lite
           </Title>
-          
+
           <Paragraph className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             开始之前，请选择您要使用的AI服务提供商
           </Paragraph>
@@ -80,27 +82,26 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
 
         {/* 设置步骤 */}
         <div className="mb-12">
-          <Steps
-            current={0}
-            items={setupSteps}
-            className="max-w-2xl mx-auto"
-          />
+          <Steps current={0} items={setupSteps} className="max-w-2xl mx-auto" />
         </div>
 
         {/* 提供商选择 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {providers.map((provider) => (
+          {providers.map(provider => (
             <Card
               key={provider.key}
               hoverable
               className={`
                 transition-all duration-300 cursor-pointer
-                ${selectedProvider === provider.key 
-                  ? 'ring-2 ring-blue-500 shadow-lg' 
-                  : 'hover:shadow-lg'
+                ${
+                  selectedProvider === provider.key
+                    ? 'ring-2 ring-blue-500 shadow-lg'
+                    : 'hover:shadow-lg'
                 }
               `}
-              onClick={() => setSelectedProvider(provider.key as 'ollama' | 'deepseek')}
+              onClick={() =>
+                setSelectedProvider(provider.key as 'ollama' | 'deepseek')
+              }
             >
               <div className="text-center mb-6">
                 {provider.icon}
@@ -142,7 +143,7 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
           >
             开始配置
           </Button>
-          
+
           <div>
             <Text className="text-sm text-gray-500 dark:text-gray-400">
               您可以随时在设置中切换不同的API提供商
@@ -155,7 +156,9 @@ const WelcomeSetup: React.FC<WelcomeSetupProps> = ({ onOpenSettings }) => {
           <Card size="small" title="🚀 Ollama 快速开始">
             <div className="space-y-2 text-sm">
               <div>1. 下载并安装 Ollama</div>
-              <div>2. 运行 <code>ollama pull llama2</code></div>
+              <div>
+                2. 运行 <code>ollama pull llama2</code>
+              </div>
               <div>3. 在设置中配置服务器地址</div>
               <div>4. 开始对话</div>
             </div>

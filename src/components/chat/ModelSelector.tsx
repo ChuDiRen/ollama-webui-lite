@@ -22,12 +22,12 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
   // 格式化模型大小
   const formatModelSize = (size?: number) => {
     if (!size) return ''
-    
+
     const gb = size / (1024 * 1024 * 1024)
     if (gb >= 1) {
       return `${gb.toFixed(1)}GB`
     }
-    
+
     const mb = size / (1024 * 1024)
     return `${mb.toFixed(0)}MB`
   }
@@ -83,9 +83,11 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
         size="large"
         showSearch
         filterOption={(input, option) =>
-          (option?.children as string)?.toLowerCase().includes(input.toLowerCase())
+          (option?.children as string)
+            ?.toLowerCase()
+            .includes(input.toLowerCase())
         }
-        popupRender={(menu) => (
+        popupRender={menu => (
           <div>
             {menu}
             {models.length === 0 && (
@@ -100,35 +102,33 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
           </div>
         )}
       >
-        {models.map((model) => (
+        {models.map(model => (
           <Option key={model.name} value={model.name}>
             <div className="flex items-center justify-between py-1">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-2">
-                  <Text className="font-medium truncate">
-                    {model.name}
-                  </Text>
+                  <Text className="font-medium truncate">{model.name}</Text>
                   {defaultModel === model.name && (
                     <StarFilled className="text-yellow-500 text-xs" />
                   )}
                 </div>
-                
+
                 <div className="flex items-center space-x-2 mt-1">
                   {model.details?.family && (
-                    <Tag 
-                      size="small" 
+                    <Tag
+                      size="small"
                       color={getModelTypeColor(model.details.family)}
                     >
                       {model.details.family}
                     </Tag>
                   )}
-                  
+
                   {model.details?.parameter_size && (
                     <Tag size="small" color="default">
                       {model.details.parameter_size}
                     </Tag>
                   )}
-                  
+
                   {model.size && (
                     <Text className="text-xs text-gray-500">
                       {formatModelSize(model.size)}
@@ -154,7 +154,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
                   <Text className="font-medium text-gray-900 dark:text-gray-100">
                     {model.name}
                   </Text>
-                  
+
                   {defaultModel !== model.name && (
                     <Button
                       type="link"
@@ -171,7 +171,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   {model.details?.family && (
                     <div>
-                      <Text className="text-gray-500 dark:text-gray-400">模型系列:</Text>
+                      <Text className="text-gray-500 dark:text-gray-400">
+                        模型系列:
+                      </Text>
                       <br />
                       <Tag color={getModelTypeColor(model.details.family)}>
                         {model.details.family}
@@ -181,7 +183,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
 
                   {model.details?.parameter_size && (
                     <div>
-                      <Text className="text-gray-500 dark:text-gray-400">参数规模:</Text>
+                      <Text className="text-gray-500 dark:text-gray-400">
+                        参数规模:
+                      </Text>
                       <br />
                       <Text className="font-medium">
                         {model.details.parameter_size}
@@ -191,7 +195,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
 
                   {model.size && (
                     <div>
-                      <Text className="text-gray-500 dark:text-gray-400">模型大小:</Text>
+                      <Text className="text-gray-500 dark:text-gray-400">
+                        模型大小:
+                      </Text>
                       <br />
                       <Text className="font-medium">
                         {formatModelSize(model.size)}
@@ -201,7 +207,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
 
                   {model.details?.quantization_level && (
                     <div>
-                      <Text className="text-gray-500 dark:text-gray-400">量化级别:</Text>
+                      <Text className="text-gray-500 dark:text-gray-400">
+                        量化级别:
+                      </Text>
                       <br />
                       <Text className="font-medium">
                         {model.details.quantization_level}
@@ -212,7 +220,9 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
 
                 {model.details?.format && (
                   <div>
-                    <Text className="text-gray-500 dark:text-gray-400">格式:</Text>
+                    <Text className="text-gray-500 dark:text-gray-400">
+                      格式:
+                    </Text>
                     <Text className="ml-2 font-medium">
                       {model.details.format}
                     </Text>

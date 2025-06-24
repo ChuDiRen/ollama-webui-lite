@@ -18,7 +18,8 @@ const getTheme = (isDark: boolean) => ({
   token: {
     colorPrimary: '#0ea5e9',
     borderRadius: 8,
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     colorBgBase: isDark ? '#141414' : '#ffffff',
     colorTextBase: isDark ? '#ffffff' : '#000000',
   },
@@ -71,7 +72,11 @@ const AppWrapper: React.FC = () => {
     }
 
     window.addEventListener('themeChange', handleThemeChange as EventListener)
-    return () => window.removeEventListener('themeChange', handleThemeChange as EventListener)
+    return () =>
+      window.removeEventListener(
+        'themeChange',
+        handleThemeChange as EventListener
+      )
   }, [])
 
   return (

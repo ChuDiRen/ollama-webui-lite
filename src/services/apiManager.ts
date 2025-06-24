@@ -80,7 +80,7 @@ class APIManager {
   // 检查服务状态
   async checkStatus(provider?: APIProvider): Promise<boolean> {
     const targetProvider = provider || this.currentProvider
-    
+
     try {
       switch (targetProvider) {
         case 'ollama':
@@ -109,7 +109,8 @@ class APIManager {
             name: model.name,
             provider: 'ollama' as APIProvider,
             size: model.size,
-            description: `${model.details?.family || ''} ${model.details?.parameter_size || ''}`.trim(),
+            description:
+              `${model.details?.family || ''} ${model.details?.parameter_size || ''}`.trim(),
           }))
         }
         case 'deepseek': {
@@ -169,7 +170,7 @@ class APIManager {
                   num_ctx: options.num_ctx,
                 },
               },
-              (chunk) => {
+              chunk => {
                 onChunk({
                   content: chunk.response || '',
                   done: chunk.done || false,
@@ -193,7 +194,7 @@ class APIManager {
                   num_ctx: options.num_ctx,
                 },
               },
-              (chunk) => {
+              chunk => {
                 onChunk({
                   content: chunk.message?.content || '',
                   done: chunk.done || false,
@@ -215,10 +216,10 @@ class APIManager {
               max_tokens: options.max_tokens,
               top_p: options.top_p,
             },
-            (chunk) => {
+            chunk => {
               const content = chunk.choices?.[0]?.delta?.content || ''
               const finishReason = chunk.choices?.[0]?.finish_reason
-              
+
               onChunk({
                 content,
                 done: finishReason !== null,

@@ -91,13 +91,15 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
       if (isConnected) {
         const models = await apiManager.getModels()
         dispatch({ type: 'SET_MODELS', payload: models })
-        const serviceName = values.apiProvider === 'deepseek' ? 'DeepSeek' : 'Ollama'
+        const serviceName =
+          values.apiProvider === 'deepseek' ? 'DeepSeek' : 'Ollama'
         message.success(`${serviceName} 服务器连接验证成功`)
       } else {
         throw new Error('连接失败')
       }
     } catch (error) {
-      const serviceName = values.apiProvider === 'deepseek' ? 'DeepSeek' : 'Ollama'
+      const serviceName =
+        values.apiProvider === 'deepseek' ? 'DeepSeek' : 'Ollama'
       message.error(`无法连接到 ${serviceName} 服务器。请检查配置和服务状态。`)
     } finally {
       setIsConnecting(false)
@@ -108,17 +110,17 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields()
-      
+
       // 更新设置
       dispatch({ type: 'SET_SETTINGS', payload: values })
-      
+
       // 保存到数据库
       if (state.db) {
         for (const [key, value] of Object.entries(values)) {
           await state.db.put('settings', { key, value })
         }
       }
-      
+
       message.success('设置已保存')
       onClose()
     } catch (error) {
@@ -137,17 +139,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
     setPullProgress(null)
 
     try {
-      await ollamaAPI.pullModel(
-        modelName,
-        (progress) => {
-          setPullProgress(progress)
-        }
-      )
-      
+      await ollamaAPI.pullModel(modelName, progress => {
+        setPullProgress(progress)
+      })
+
       // 重新获取模型列表
       const models = await ollamaAPI.getModels()
       dispatch({ type: 'SET_MODELS', payload: models })
-      
+
       message.success(`模型 ${modelName} 拉取成功`)
       setPullProgress(null)
     } catch (error) {
@@ -163,11 +162,11 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
 
     try {
       await ollamaAPI.deleteModel(modelName)
-      
+
       // 重新获取模型列表
       const models = await ollamaAPI.getModels()
       dispatch({ type: 'SET_MODELS', payload: models })
-      
+
       message.success(`模型 ${modelName} 删除成功`)
     } catch (error) {
       message.error(`删除模型失败: ${error.message}`)
@@ -259,7 +258,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
           <Form.Item label="主题">
             <Select
               value={theme}
-              onChange={(value) => setTheme(value)}
+              onChange={value => setTheme(value)}
               style={{ width: 120 }}
             >
               <Option value="light">浅色</Option>
@@ -307,26 +306,33 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
             <Space.Compact style={{ width: '100%' }}>
               <Input
                 placeholder="输入模型名称 (例如: llama2)"
-                onPressEnter={(e) => handlePullModel(e.currentTarget.value)}
+                onPressEnter={e => handlePullModel(e.currentTarget.value)}
               />
               <Button
                 type="primary"
                 icon={<DownloadOutlined />}
                 loading={isPulling}
-                onClick={(e) => {
-                  const input = e.currentTarget.parentElement?.querySelector('input')
+                onClick={e => {
+                  const input =
+                    e.currentTarget.parentElement?.querySelector('input')
                   if (input) handlePullModel(input.value)
                 }}
               >
                 拉取
               </Button>
             </Space.Compact>
-            
+
             {pullProgress && (
               <div className="mt-4">
                 <Progress
-                  percent={Math.round((pullProgress.completed || 0) / (pullProgress.total || 1) * 100)}
-                  status={pullProgress.status === 'success' ? 'success' : 'active'}
+                  percent={Math.round(
+                    ((pullProgress.completed || 0) /
+                      (pullProgress.total || 1)) *
+                      100
+                  )}
+                  status={
+                    pullProgress.status === 'success' ? 'success' : 'active'
+                  }
                 />
                 <Text className="text-sm text-gray-500">
                   {pullProgress.status || '下载中...'}
@@ -337,13 +343,17 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
 
           <Card title="已安装的模型" size="small">
             <div className="space-y-2">
-              {state.models.map((model) => (
-                <div key={model.name} className="flex items-center justify-between p-2 border rounded">
+              {state.models.map(model => (
+                <div
+                  key={model.name}
+                  className="flex items-center justify-between p-2 border rounded"
+                >
                   <div>
                     <Text strong>{model.name}</Text>
                     <br />
                     <Text className="text-sm text-gray-500">
-                      {model.details?.parameter_size} • {(model.size / 1024 / 1024 / 1024).toFixed(1)}GB
+                      {model.details?.parameter_size} •{' '}
+                      {(model.size / 1024 / 1024 / 1024).toFixed(1)}GB
                     </Text>
                   </div>
                   <Popconfirm
@@ -363,7 +373,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
                   </Popconfirm>
                 </div>
               ))}
-              
+
               {state.models.length === 0 && (
                 <Text className="text-gray-500">暂无已安装的模型</Text>
               )}
@@ -433,11 +443,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ open, onClose }) => {
       destroyOnHidden
     >
       <Form form={form} layout="vertical">
-        <Tabs
-          activeKey={activeTab}
-          onChange={setActiveTab}
-          items={tabItems}
-        />
+        <Tabs activeKey={activeTab} onChange={setActiveTab} items={tabItems} />
       </Form>
     </Modal>
   )

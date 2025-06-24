@@ -97,11 +97,13 @@ class OllamaAPI {
 
     // 请求拦截器
     this.client.interceptors.request.use(
-      (config) => {
-        console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`)
+      config => {
+        console.log(
+          `API Request: ${config.method?.toUpperCase()} ${config.url}`
+        )
         return config
       },
-      (error) => {
+      error => {
         console.error('API Request Error:', error)
         return Promise.reject(error)
       }
@@ -109,11 +111,11 @@ class OllamaAPI {
 
     // 响应拦截器
     this.client.interceptors.response.use(
-      (response) => {
+      response => {
         console.log(`API Response: ${response.status} ${response.config.url}`)
         return response
       },
-      (error) => {
+      error => {
         console.error('API Response Error:', error)
         return Promise.reject(error)
       }
@@ -149,12 +151,17 @@ class OllamaAPI {
   }
 
   // 生成文本（非流式）
-  async generate(request: OllamaGenerateRequest): Promise<OllamaGenerateResponse> {
+  async generate(
+    request: OllamaGenerateRequest
+  ): Promise<OllamaGenerateResponse> {
     try {
-      const response = await this.client.post<OllamaGenerateResponse>('/generate', {
-        ...request,
-        stream: false,
-      })
+      const response = await this.client.post<OllamaGenerateResponse>(
+        '/generate',
+        {
+          ...request,
+          stream: false,
+        }
+      )
       return response.data
     } catch (error) {
       console.error('Failed to generate:', error)

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Typography, Card, Space, Button } from 'antd'
-import { 
-  MessageOutlined, 
-  BulbOutlined, 
-  CodeOutlined, 
+import {
+  MessageOutlined,
+  BulbOutlined,
+  CodeOutlined,
   BookOutlined,
-  RocketOutlined 
+  RocketOutlined,
 } from '@ant-design/icons'
 
 const { Title, Text, Paragraph } = Typography
@@ -50,18 +50,14 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSendMessage }) => {
         <div className="text-center mb-12">
           <div className="mb-6">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-              <img 
-                src="/ollama.png" 
-                alt="Ollama" 
-                className="w-12 h-12"
-              />
+              <img src="/ollama.png" alt="Ollama" className="w-12 h-12" />
             </div>
           </div>
-          
+
           <Title level={1} className="!mb-4 text-gradient">
             欢迎使用 Ollama WebUI
           </Title>
-          
+
           <Paragraph className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             这是一个基于 Ollama 的本地大语言模型聊天界面。
             您可以与AI助手进行对话，获得各种帮助和支持。
@@ -73,7 +69,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSendMessage }) => {
           <Title level={3} className="text-center mb-8">
             今天我可以为您做些什么？
           </Title>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {exampleQuestions.map((item, index) => (
               <Card
@@ -83,9 +79,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSendMessage }) => {
                 onClick={() => onSendMessage(item.prompt)}
               >
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 text-2xl">
-                    {item.icon}
-                  </div>
+                  <div className="flex-shrink-0 text-2xl">{item.icon}</div>
                   <div className="flex-1">
                     <Title level={5} className="!mb-2">
                       {item.title}
@@ -108,7 +102,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSendMessage }) => {
                 <MessageOutlined className="text-blue-500" />
                 <Text className="font-medium">使用提示</Text>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="text-center">
                   <Text className="text-gray-600 dark:text-gray-300">
@@ -126,7 +120,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onSendMessage }) => {
                   </Text>
                 </div>
               </div>
-              
+
               <Text className="text-xs text-gray-500 dark:text-gray-400">
                 点击上方示例开始对话，或在下方输入框中输入您的问题
               </Text>
